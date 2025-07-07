@@ -1,0 +1,65 @@
+# Defines the User object.
+# A user will always have an id and a userName.
+type User {
+    userId: Int!
+    userName: String!
+    role: String
+}
+#type Message {
+#    id: ID!
+#    content: String!
+#    createdAt: String!
+#}
+
+# Defines the available queries.
+type Query {
+    # Returns a non-nullable list of non-nullable Users.
+    # If no users exist, it will return an empty list [].
+    getAllUsers: [User!]!
+
+    # Returns a single User by their unique ID.
+    # The result can be null if no user is found.
+    getUserById(id: Int!): User
+    getUserByName(username:String!):User
+    getResult:String
+
+}
+
+# Input object for the login mutation.
+# Both username and password are required.
+input LoginRequest {
+    username: String!
+    password: String!
+}
+input SignupRequest {
+    username: String!
+    password: String!
+    role:String!
+}
+
+
+# The response from a successful login.
+# The token is guaranteed to be a non-nullable String.
+type AuthResponse {
+    token: String!
+    error:String!
+}
+type SignupResponse{
+    username:String!
+    password:String!
+    role:String!,
+    status:String!
+}
+
+# Defines the available mutations.
+type Mutation {
+    # Requires a non-nullable LoginRequest and returns a non-nullable AuthResponse.
+    login(loginInput: LoginRequest!): AuthResponse!
+    #use signup response to notify existing users about new user signup
+    signup(signupInput:SignupRequest!):SignupResponse!
+
+#    sendMessage(content: String!): Message
+}
+type Subscription {
+    newUser: User
+}
