@@ -13,7 +13,7 @@ public class SubscriptionController {
     @Autowired
     private SignupPublisher signupPublisher;
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @SubscriptionMapping
     public Flux<User> newUser() {
         return signupPublisher.getPublisher();
